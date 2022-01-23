@@ -13,7 +13,7 @@ let lz = document.querySelector('.lz')
 let lzProductionUrl = 'https://deanherring.github.io/gambling-public/';
 
 let lzCardDeck = {
-	default: '/img/luckyzodiac/card-back.svg',
+	default: `${lzProductionUrl}/img/luckyzodiac/card-back.svg`,
 	hearts: {
 		color: 0,
 		2: `${lzProductionUrl}/img/luckyzodiac/hearts/2-hearts.svg`,
