@@ -10,6 +10,7 @@ let lzRed = document.querySelector('.lz__red-color')
 let lzBlack = document.querySelector('.lz__black-color')
 let lzCard = document.querySelector('.lz__card').children[0]
 let lz = document.querySelector('.lz')
+let lzAddMoney = lzTakeWin.nextElementSibling
 
 let lzCardDeck = {
 	default: '/img/luckyzodiac/card-back.svg',
@@ -182,9 +183,17 @@ function takeWin(e) {
 	restart(e)
 }
 
+function addMoney(e) {
+	e.preventDefault()
+
+	localStorage.balance = parseInt(localStorage.balance) + 10000
+	lzBalance.innerText = localStorage.balance
+}
+
 [lzRed, lzBlack].forEach(option => {
 	option.addEventListener('click', selected)
 })
 lzBetButton.addEventListener('click', placeBet)
 lzRestart.addEventListener('click', restart)
 lzTakeWin.addEventListener('click', takeWin)
+lzAddMoney.addEventListener('click', addMoney)
