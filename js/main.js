@@ -11,10 +11,8 @@ let lzBlack = document.querySelector('.lz__black-color')
 let lzCard = document.querySelector('.lz__card').children[0]
 let lz = document.querySelector('.lz')
 <<<<<<< HEAD
-let lzProductionUrl = 'https://deanherring.github.io/gambling-public/';
-=======
+let lzProductionUrl = 'https://deanherring.github.io/gambling-public/'
 let lzAddMoney = lzTakeWin.nextElementSibling
->>>>>>> front-end
 
 let lzCardDeck = {
 	default: `${lzProductionUrl}/img/luckyzodiac/card-back.svg`,
