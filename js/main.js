@@ -82,6 +82,11 @@ let lzCardDeck = {
 }
 
 // localStorage.balance = 10000
+
+if ( !localStorage.balance ) {
+	localStorage.balance = 10000
+}
+
 lzBalance.innerText = localStorage.balance
 lzCard.src = lzCardDeck.default
 
@@ -192,7 +197,7 @@ function addMoney(e) {
 	} else {
 		localStorage.balance = parseInt(localStorage.balance) + 10000
 	}
-	
+
 	lzBalance.innerText = localStorage.balance
 }
 
