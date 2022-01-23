@@ -81,7 +81,7 @@ let lzCardDeck = {
 	},
 }
 
-localStorage.balance = 10000
+// localStorage.balance = 10000
 lzBalance.innerText = localStorage.balance
 lzCard.src = lzCardDeck.default
 
