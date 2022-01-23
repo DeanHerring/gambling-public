@@ -10,7 +10,6 @@ let lzRed = document.querySelector('.lz__red-color')
 let lzBlack = document.querySelector('.lz__black-color')
 let lzCard = document.querySelector('.lz__card').children[0]
 let lz = document.querySelector('.lz')
-<<<<<<< HEAD
 let lzProductionUrl = 'https://deanherring.github.io/gambling-public/'
 let lzAddMoney = lzTakeWin.nextElementSibling
 
@@ -82,7 +81,7 @@ let lzCardDeck = {
 	},
 }
 
-// localStorage.balance = 10000
+localStorage.balance = 10000
 lzBalance.innerText = localStorage.balance
 lzCard.src = lzCardDeck.default
 
