@@ -187,7 +187,12 @@ function takeWin(e) {
 function addMoney(e) {
 	e.preventDefault()
 
-	localStorage.balance = parseInt(localStorage.balance) + 10000
+	if ( !localStorage.balance ) {
+		localStorage.balance = 10000
+	} else {
+		localStorage.balance = parseInt(localStorage.balance) + 10000
+	}
+	
 	lzBalance.innerText = localStorage.balance
 }
 
