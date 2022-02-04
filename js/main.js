@@ -17,86 +17,15 @@ let lzBlackClubs = document.querySelector('.lz__black-clubs')
 
 let lzCard = document.querySelector('.lz__card').children[0]
 let lz = document.querySelector('.lz')
-<<<<<<< HEAD
-let lzProductionUrl = 'https://deanherring.github.io/gambling-public/'
+// let lzProductionUrl = 'https://deanherring.github.io/gambling-public/'
 let lzAddMoney = lzTakeWin.nextElementSibling
-=======
+
 let lzAddMoney = document.querySelector('.lz-panel__add')
 let lzRetry = document.querySelector('.lz-panel__retry')
->>>>>>> front-end
 
 let lzCardDeck = {
-	default: `${lzProductionUrl}/img/luckyzodiac/card-back.svg`,
+	default: '/img/luckyzodiac/card-back.svg',
 	hearts: {
-<<<<<<< HEAD
-		color: 0,
-		2: `${lzProductionUrl}/img/luckyzodiac/hearts/2-hearts.svg`,
-		3: `${lzProductionUrl}/img/luckyzodiac/hearts/3-hearts.svg`,
-		4: `${lzProductionUrl}/img/luckyzodiac/hearts/4-hearts.svg`,
-		5: `${lzProductionUrl}/img/luckyzodiac/hearts/5-hearts.svg`,
-		6: `${lzProductionUrl}/img/luckyzodiac/hearts/6-hearts.svg`,
-		7: `${lzProductionUrl}/img/luckyzodiac/hearts/7-hearts.svg`,
-		8: `${lzProductionUrl}/img/luckyzodiac/hearts/8-hearts.svg`,
-		9: `${lzProductionUrl}/img/luckyzodiac/hearts/9-hearts.svg`,
-		10: `${lzProductionUrl}/img/luckyzodiac/hearts/10-hearts.svg`,
-		11: `${lzProductionUrl}/img/luckyzodiac/hearts/j-hearts.svg`,
-		12: `${lzProductionUrl}/img/luckyzodiac/hearts/q-hearts.svg`,
-		13: `${lzProductionUrl}/img/luckyzodiac/hearts/k-hearts.svg`,
-		14: `${lzProductionUrl}/img/luckyzodiac/hearts/a-hearts.svg`,
-	},
-	spades: {
-		color: 1,
-		2: `${lzProductionUrl}/img/luckyzodiac/spades/2-spades.svg`,
-		3: `${lzProductionUrl}/img/luckyzodiac/spades/3-spades.svg`,
-		4: `${lzProductionUrl}/img/luckyzodiac/spades/4-spades.svg`,
-		5: `${lzProductionUrl}/img/luckyzodiac/spades/5-spades.svg`,
-		6: `${lzProductionUrl}/img/luckyzodiac/spades/6-spades.svg`,
-		7: `${lzProductionUrl}/img/luckyzodiac/spades/7-spades.svg`,
-		8: `${lzProductionUrl}/img/luckyzodiac/spades/8-spades.svg`,
-		9: `${lzProductionUrl}/img/luckyzodiac/spades/9-spades.svg`,
-		10: `${lzProductionUrl}/img/luckyzodiac/spades/10-spades.svg`,
-		11: `${lzProductionUrl}/img/luckyzodiac/spades/j-spades.svg`,
-		12: `${lzProductionUrl}/img/luckyzodiac/spades/q-spades.svg`,
-		13: `${lzProductionUrl}/img/luckyzodiac/spades/k-spades.svg`,
-		14: `${lzProductionUrl}/img/luckyzodiac/spades/a-spades.svg`,
-	},
-	diamonds: {
-		color: 0,
-		2: `${lzProductionUrl}/img/luckyzodiac/diamonds/2-diamonds.svg`,
-		3: `${lzProductionUrl}/img/luckyzodiac/diamonds/3-diamonds.svg`,
-		4: `${lzProductionUrl}/img/luckyzodiac/diamonds/4-diamonds.svg`,
-		5: `${lzProductionUrl}/img/luckyzodiac/diamonds/5-diamonds.svg`,
-		6: `${lzProductionUrl}/img/luckyzodiac/diamonds/6-diamonds.svg`,
-		7: `${lzProductionUrl}/img/luckyzodiac/diamonds/7-diamonds.svg`,
-		8: `${lzProductionUrl}/img/luckyzodiac/diamonds/8-diamonds.svg`,
-		9: `${lzProductionUrl}/img/luckyzodiac/diamonds/9-diamonds.svg`,
-		10: `${lzProductionUrl}/img/luckyzodiac/diamonds/10-diamonds.svg`,
-		11: `${lzProductionUrl}/img/luckyzodiac/diamonds/j-diamonds.svg`,
-		12: `${lzProductionUrl}/img/luckyzodiac/diamonds/q-diamonds.svg`,
-		13: `${lzProductionUrl}/img/luckyzodiac/diamonds/k-diamonds.svg`,
-		14: `${lzProductionUrl}/img/luckyzodiac/diamonds/a-diamonds.svg`,
-	},
-	clubs: {
-		color: 1,
-		2: `${lzProductionUrl}/img/luckyzodiac/clubs/2-clubs.svg`,
-		3: `${lzProductionUrl}/img/luckyzodiac/clubs/3-clubs.svg`,
-		4: `${lzProductionUrl}/img/luckyzodiac/clubs/4-clubs.svg`,
-		5: `${lzProductionUrl}/img/luckyzodiac/clubs/5-clubs.svg`,
-		6: `${lzProductionUrl}/img/luckyzodiac/clubs/6-clubs.svg`,
-		7: `${lzProductionUrl}/img/luckyzodiac/clubs/7-clubs.svg`,
-		8: `${lzProductionUrl}/img/luckyzodiac/clubs/8-clubs.svg`,
-		9: `${lzProductionUrl}/img/luckyzodiac/clubs/9-clubs.svg`,
-		10: `${lzProductionUrl}/img/luckyzodiac/clubs/10-clubs.svg`,
-		11: `${lzProductionUrl}/img/luckyzodiac/clubs/j-clubs.svg`,
-		12: `${lzProductionUrl}/img/luckyzodiac/clubs/q-clubs.svg`,
-		13: `${lzProductionUrl}/img/luckyzodiac/clubs/k-clubs.svg`,
-		14: `${lzProductionUrl}/img/luckyzodiac/clubs/a-clubs.svg`,
-	},
-}
-
-// localStorage.balance = 10000
-
-=======
 		color: "red",
 		suit: "hearts",
 		2: "/img/luckyzodiac/hearts/2-hearts.svg",
@@ -112,7 +41,7 @@ let lzCardDeck = {
 		12: "/img/luckyzodiac/hearts/q-hearts.svg",
 		13: "/img/luckyzodiac/hearts/k-hearts.svg",
 		14: "/img/luckyzodiac/hearts/a-hearts.svg",
-	},
+	}
 	spades: {
 		color: "black",
 		suit: "spades",
@@ -166,7 +95,6 @@ let lzCardDeck = {
 	},
 }
 
->>>>>>> front-end
 if ( !localStorage.balance ) {
 	localStorage.balance = 10000
 }
