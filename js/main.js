@@ -1,21 +1,30 @@
 let lzBalance = document.querySelector('.header__game').children[1]
 let lzAmount = document.querySelector('.lz__red-heading').children[1]
-let lzBet = document.querySelector('.bet').children[0]
-let lzBetButton = lzBet.nextElementSibling
-let lzRestart = lzBetButton.nextElementSibling
-let lzTakeWin = lzRestart.nextElementSibling
+let lzBet = document.querySelector('.lz-panel__bet')
+let lzBetButton = document.querySelector('.lz-panel__bet-btn')
+let lzRestart = document.querySelector('.lz-panel__restart')
+let lzTakeWin = document.querySelector('.lz-panel__take')
 let lzPossibleWinColor = document.querySelector('.lz__black-heading').children[1]
 let lzPossibleWinSuit = document.querySelector('.lz__black-bottom').children[1]
+
 let lzRed = document.querySelector('.lz__red-color')
+let lzRedHearts = document.querySelector('.lz__red-hearts')
+let lzRedDiamonds = document.querySelector('.lz__red-diamonds')
+
 let lzBlack = document.querySelector('.lz__black-color')
+let lzBlackSpades = document.querySelector('.lz__black-spades')
+let lzBlackClubs = document.querySelector('.lz__black-clubs')
+
 let lzCard = document.querySelector('.lz__card').children[0]
 let lz = document.querySelector('.lz')
-let lzAddMoney = lzTakeWin.nextElementSibling
+let lzAddMoney = document.querySelector('.lz-panel__add')
+let lzRetry = document.querySelector('.lz-panel__retry')
 
 let lzCardDeck = {
 	default: '/img/luckyzodiac/card-back.svg',
 	hearts: {
-		color: 0,
+		color: "red",
+		suit: "hearts",
 		2: "/img/luckyzodiac/hearts/2-hearts.svg",
 		3: "/img/luckyzodiac/hearts/3-hearts.svg",
 		4: "/img/luckyzodiac/hearts/4-hearts.svg",
@@ -31,7 +40,8 @@ let lzCardDeck = {
 		14: "/img/luckyzodiac/hearts/a-hearts.svg",
 	},
 	spades: {
-		color: 1,
+		color: "black",
+		suit: "spades",
 		2: "/img/luckyzodiac/spades/2-spades.svg",
 		3: "/img/luckyzodiac/spades/3-spades.svg",
 		4: "/img/luckyzodiac/spades/4-spades.svg",
@@ -47,7 +57,8 @@ let lzCardDeck = {
 		14: "/img/luckyzodiac/spades/a-spades.svg",
 	},
 	diamonds: {
-		color: 0,
+		color: "red",
+		suit: "diamonds",
 		2: "/img/luckyzodiac/diamonds/2-diamonds.svg",
 		3: "/img/luckyzodiac/diamonds/3-diamonds.svg",
 		4: "/img/luckyzodiac/diamonds/4-diamonds.svg",
@@ -63,7 +74,8 @@ let lzCardDeck = {
 		14: "/img/luckyzodiac/diamonds/a-diamonds.svg",
 	},
 	clubs: {
-		color: 1,
+		color: "black",
+		suit: "clubs",
 		2: "/img/luckyzodiac/clubs/2-clubs.svg",
 		3: "/img/luckyzodiac/clubs/3-clubs.svg",
 		4: "/img/luckyzodiac/clubs/4-clubs.svg",
@@ -80,7 +92,10 @@ let lzCardDeck = {
 	},
 }
 
-// localStorage.balance = 10000
+if ( !localStorage.balance ) {
+	localStorage.balance = 10000
+}
+
 lzBalance.innerText = localStorage.balance
 lzCard.src = lzCardDeck.default
 
@@ -92,6 +107,7 @@ function placeBet(e) {
 	}
 
 	let lzDiff = parseInt(localStorage.balance) - lzBet.value
+
 
 	if ( Math.sign(lzDiff) <= 0 ) {
 		lzAmount.innerText = localStorage.balance
@@ -106,11 +122,10 @@ function placeBet(e) {
 	lzBetButton.disabled = true
 	lzPossibleWinColor.innerText = parseInt(lzAmount.innerText) * 2
 	lzPossibleWinSuit.innerText = parseInt(lzPossibleWinColor.innerText) * 2
+	localStorage.bet = lzBet.value
 }
 
-function restart(e) {
-	e.preventDefault()
-
+function restart() {
 	localStorage.balance = parseInt(lzBalance.innerText)
 	lzCard.src= lzCardDeck.default
 	lzAmount.innerText = 0
@@ -119,6 +134,7 @@ function restart(e) {
 	lzBetButton.disabled = false
 	lzBet.value = 0
 	lz.classList.add('disabled')
+	lzRetry.disabled = false
 }
 
 function randomInteger(min, max) {
@@ -147,9 +163,32 @@ function lzAlert(title, message, int) {
 	})
 }
 
-function selected(e) {
-	e.preventDefault()
+function selectedResult(option, select) {
+	let randomSuit = randomInteger(1, 4)
+	let randomCard = randomInteger(2, 14)
+	let generateCard = undefined;
 
+	if ( select == 'color' ) {
+		generateCard = Object.entries(lzCardDeck)[randomSuit][1].color
+	} else if ( select == 'suit' ) {
+		generateCard = Object.entries(lzCardDeck)[randomSuit][1].suit
+	}
+
+	lzCard.src = Object.entries(lzCardDeck)[randomSuit][1][randomCard]
+
+	if ( option == generateCard ) {
+		lzAlert("Повезло!", "Вы выиграли", 1)
+		lzAmount.innerText = lzPossibleWinColor.innerText
+		lzPossibleWinColor.innerText = parseInt(lzAmount.innerText) * 2
+		lzPossibleWinSuit.innerText = parseInt(lzPossibleWinColor.innerText) * 2
+	} else {
+		lzAlert("Не повезло!", "Вы проиграли", 0)
+		lz.classList.add('disabled')
+		setTimeout(restart, 3000)
+	}
+}
+
+function selected(e) {
 	let target = e.target;
 
 	if ( lz.classList.contains('disabled') ) {
@@ -157,20 +196,12 @@ function selected(e) {
 	} else {
 		lzAlert("Заебися", "Ставки приняты!", 1)
 
-		let lzSelectedOption = target.getAttribute('data-option') // 0 - red 1 - black
-		let randomSuit = randomInteger(1, 4)
-		let randomCard = randomInteger(2, 14)
+		let lzSelectedOption = target.getAttribute('data-option')
 
-		lzCard.src = Object.entries(lzCardDeck)[randomSuit][1][randomCard]
-
-		if ( lzSelectedOption == Object.entries(lzCardDeck)[randomSuit][1].color ) {
-			lzAlert("Повезло!", "Вы выиграли", 1)
-			lzAmount.innerText = lzPossibleWinColor.innerText
-			lzPossibleWinColor.innerText = parseInt(lzAmount.innerText) * 2
-			lzPossibleWinSuit.innerText = parseInt(lzPossibleWinColor.innerText) * 2
+		if ( lzSelectedOption == "red" || lzSelectedOption == "black" ) {
+			selectedResult(lzSelectedOption, 'color')
 		} else {
-			lzAlert("Не повезло!", "Вы проиграли", 0)
-			restart(e)
+			selectedResult(lzSelectedOption, 'suit')
 		}
 	}
 }
@@ -190,10 +221,21 @@ function addMoney(e) {
 	lzBalance.innerText = localStorage.balance
 }
 
-[lzRed, lzBlack].forEach(option => {
+function retry(e) {
+	e.preventDefault()
+
+	lzBet.value = localStorage.bet
+	lzBet.innerText = localStorage.bet
+
+	placeBet(e)
+	lzRetry.disabled = true
+}
+
+[lzRed, lzBlack, lzRedHearts, lzRedDiamonds, lzBlackSpades, lzBlackClubs].forEach(option => {
 	option.addEventListener('click', selected)
 })
 lzBetButton.addEventListener('click', placeBet)
 lzRestart.addEventListener('click', restart)
 lzTakeWin.addEventListener('click', takeWin)
 lzAddMoney.addEventListener('click', addMoney)
+lzRetry.addEventListener('click', retry)
