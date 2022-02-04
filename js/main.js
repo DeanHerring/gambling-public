@@ -166,19 +166,22 @@ function lzAlert(title, message, int) {
 function selectedResult(option, select) {
 	let randomSuit = randomInteger(1, 4)
 	let randomCard = randomInteger(2, 14)
-	let generateCard = undefined;
+	let generateCard = undefined
+	let multiplier = undefined
 
 	if ( select == 'color' ) {
 		generateCard = Object.entries(lzCardDeck)[randomSuit][1].color
+		multiplier = lzPossibleWinColor.innerText
 	} else if ( select == 'suit' ) {
 		generateCard = Object.entries(lzCardDeck)[randomSuit][1].suit
+		multiplier = lzPossibleWinSuit.innerText
 	}
 
 	lzCard.src = Object.entries(lzCardDeck)[randomSuit][1][randomCard]
 
 	if ( option == generateCard ) {
 		lzAlert("Повезло!", "Вы выиграли", 1)
-		lzAmount.innerText = lzPossibleWinColor.innerText
+		lzAmount.innerText = multiplier
 		lzPossibleWinColor.innerText = parseInt(lzAmount.innerText) * 2
 		lzPossibleWinSuit.innerText = parseInt(lzPossibleWinColor.innerText) * 2
 	} else {
