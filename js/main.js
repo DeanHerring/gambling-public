@@ -17,14 +17,14 @@ let lzBlackClubs = document.querySelector('.lz__black-clubs')
 
 let lzCard = document.querySelector('.lz__card').children[0]
 let lz = document.querySelector('.lz')
-// let lzProductionUrl = 'https://deanherring.github.io/gambling-public/'
+let lzProductionUrl = 'https://deanherring.github.io/gambling-public/'
 let lzAddMoney = lzTakeWin.nextElementSibling
 
 let lzAddMoney = document.querySelector('.lz-panel__add')
 let lzRetry = document.querySelector('.lz-panel__retry')
 
 let lzCardDeck = {
-	default: '/img/luckyzodiac/card-back.svg',
+	default: lzProductionUrl, '/img/luckyzodiac/card-back.svg',
 	hearts: {
 		color: "red",
 		suit: "hearts",
