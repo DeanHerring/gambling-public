@@ -6,6 +6,7 @@
 	<title>Gambling | LuckyZodiac</title>
 	<!-- libs -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css" integrity="sha512-O03ntXoVqaGUTAeAmvQ2YSzkCvclZEcPQu1eqloPaHfJ5RuNGiS4l+3duaidD801P50J28EHyonCV06CUlTSag==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 	<!-- styles -->
 	<link rel="stylesheet" href="/gambling-public/css/main.min.css">
 	<link rel="stylesheet" href="/gambling-public/css/media.min.css">
@@ -34,13 +35,16 @@
 
 		<!-- content -->
 		<section class="content">
-			<form action="" class="bet">
-				<input type="text" name="lzBet">
-				<button>Bet</button>
-				<button>Restart</button>
-				<button>Take</button>
-				<button>+10000</button>
-			</form>
+			<div class="lz-panel">
+				<form class="lz-panel__form">
+					<input type="text" name="lzBet" class="lz-panel__bet">
+					<button class="lz-panel__bet-btn">Bet</button>
+					<button class="lz-panel__restart">Restart</button>
+					<button class="lz-panel__take">Take</button>
+					<button class="lz-panel__add">+10000</button>
+					<button class="lz-panel__retry">Retry</button>
+				</form>
+			</div>
 			<div class="lz disabled">
 				<div class="lz__red">
 					<div class="lz__red-heading">
@@ -48,12 +52,17 @@
 						<h1>0</h1>
 					</div>
 					<div class="lz__red-option">
-						<div class="lz__red-color" data-option="0">
-							<h1 data-option="0">Red</h1>
+						<div class="lz__red-color color" data-option="red">
+							<h1 data-option="red">Red</h1>
 						</div>
 						<div class="lz__red-suits">
+<<<<<<< HEAD
 							<div class="lz__red-suit"><img src="https://deanherring.github.io/gambling-public/img/luckyzodiac/hearts.svg" alt=""></div>
 							<div class="lz__red-suit"><img src="https://deanherring.github.io/gambling-public/img/luckyzodiac/diamonds.svg" alt=""></div>
+=======
+							<div class="lz__red-hearts" data-option="hearts"><img src="/img/luckyzodiac/hearts.svg" alt="" data-option="hearts"></div>
+							<div class="lz__red-diamonds" data-option="diamonds"><img src="/img/luckyzodiac/diamonds.svg" alt="" data-option="diamonds"></div>
+>>>>>>> front-end
 						</div>
 					</div>
 				</div>
@@ -66,12 +75,17 @@
 						<h1>0</h1>
 					</div>
 					<div class="lz__black-option">
-						<div class="lz__black-color" data-option="1">
-							<h1 data-option="1">Black</h1>
+						<div class="lz__black-color color" data-option="black">
+							<h1 data-option="black">Black</h1>
 						</div>
 						<div class="lz__black-suits">
+<<<<<<< HEAD
 							<div class="lz__black-suit"><img src="https://deanherring.github.io/gambling-public/img/luckyzodiac/spades.svg" alt=""></div>
 							<div class="lz__black-suit"><img src="https://deanherring.github.io/gambling-public/img/luckyzodiac/club.svg" alt=""></div>
+=======
+							<div class="lz__black-spades" data-option="spades"><img src="/img/luckyzodiac/spades.svg" alt="" data-option="spades"></div>
+							<div class="lz__black-clubs" data-option="clubs"><img src="/img/luckyzodiac/club.svg" alt="" data-option="clubs"></div>
+>>>>>>> front-end
 						</div>
 					</div>
 					<div class="lz__black-bottom">
@@ -80,11 +94,44 @@
 					</div>
 				</div>
 			</div>
+			<div class="lz-history hidden">
+				<!-- Id, Bet, Card, Result -->
+				<table class="lz-history__table">
+					<caption>История</caption>
+
+					<tr class="lz-history__">
+						<th>ID</th>
+						<th>Ставка</th>
+						<th>Масть</th>
+						<th>Результат</th>
+					</tr>
+
+					<tr>
+						<td>1</td>
+						<td>22</td>
+						<td>Пика</td>
+						<td>100</td>
+					</tr>
+					<tr>
+						<td>2</td>
+						<td>33</td>
+						<td>Буба</td>
+						<td>0</td>
+					</tr>
+					<tr>
+						<td>3</td>
+						<td>11</td>
+						<td>Трефы</td>
+						<td>400</td>
+					</tr>
+				</table>
+			</div>
 		</section>
 	</div>
 
 	<!-- libs -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js" integrity="sha512-Zq9o+E00xhhR/7vJ49mxFNJ0KQw1E1TMWkPTxrWcnpfEFDEXgUiwJHIKit93EW/XxE31HSI5GEOW06G6BF1AtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 	<!-- scripts -->
 	<script src="/gambling-public/js/main.js"></script>
 </body>
