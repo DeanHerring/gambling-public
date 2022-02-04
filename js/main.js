@@ -41,7 +41,7 @@ let lzCardDeck = {
 		12: lzProductionUrl + "/img/luckyzodiac/hearts/q-hearts.svg",
 		13: lzProductionUrl + "/img/luckyzodiac/hearts/k-hearts.svg",
 		14: lzProductionUrl + "/img/luckyzodiac/hearts/a-hearts.svg",
-	}
+	},
 	spades: {
 		color: "black",
 		suit: "spades",
