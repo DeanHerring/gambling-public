@@ -22,6 +22,7 @@ let lzProductionUrl = 'https://deanherring.github.io/gambling-public'
 
 let lzAddMoney = document.querySelector('.lz-panel__add')
 let lzRetry = document.querySelector('.lz-panel__retry')
+let lzResult = document.querySelector('.lz__result')
 
 let lzCardDeck = {
 	default: lzProductionUrl + '/img/luckyzodiac/card-back.svg',
@@ -123,6 +124,8 @@ function placeBet(e) {
 	}
 
 	lzBetButton.disabled = true
+	lzRetry.disabled = true
+	lzRestart.disabled = true
 	lzPossibleWinColor.innerText = parseInt(lzAmount.innerText) * 2
 	lzPossibleWinSuit.innerText = parseInt(lzPossibleWinColor.innerText) * 2
 	localStorage.bet = lzBet.value
@@ -138,6 +141,8 @@ function restart() {
 	lzBet.value = 0
 	lz.classList.add('disabled')
 	lzRetry.disabled = false
+	lzTakeWin.disabled = false
+	lzRestart.disabled = false
 }
 
 function randomInteger(min, max) {
@@ -172,6 +177,20 @@ function selectedResult(option, select) {
 	let generateCard = undefined
 	let multiplier = undefined
 
+	function resultCheck(strWin, strLose, strText) {
+		lzResult.classList.add('active')
+		lz.classList.add('disabled')
+
+		if ( lzResult.classList.contains(strLose) ) {
+			lzResult.classList.remove(strLose)
+			lzResult.classList.add(strWin)
+			lzResult.children[0].innerText = strText
+		} else {
+			lzResult.classList.add(strWin)
+			lzResult.children[0].innerText = strText
+		}
+	}
+
 	if ( select == 'color' ) {
 		generateCard = Object.entries(lzCardDeck)[randomSuit][1].color
 		multiplier = lzPossibleWinColor.innerText
@@ -182,16 +201,43 @@ function selectedResult(option, select) {
 
 	lzCard.src = Object.entries(lzCardDeck)[randomSuit][1][randomCard]
 
-	if ( option == generateCard ) {
-		lzAlert("Повезло!", "Вы выиграли", 1)
-		lzAmount.innerText = multiplier
-		lzPossibleWinColor.innerText = parseInt(lzAmount.innerText) * 2
-		lzPossibleWinSuit.innerText = parseInt(lzPossibleWinColor.innerText) * 2
-	} else {
-		lzAlert("Не повезло!", "Вы проиграли", 0)
-		lz.classList.add('disabled')
-		setTimeout(restart, 3000)
-	}
+	let promise = new Promise((resolve, reject) => {
+		if ( option == generateCard ) {
+			// Done
+
+			lzAmount.innerText = multiplier
+			lzPossibleWinColor.innerText = parseInt(lzAmount.innerText) * 2
+			lzPossibleWinSuit.innerText = parseInt(lzPossibleWinColor.innerText) * 2
+
+			resolve(1)
+		} else {
+			// Failed
+
+			lzTakeWin.disabled = true
+			lz.classList.add('disabled')
+
+			reject(0)
+		}
+	})
+
+	promise.then(
+		(resolse) => {
+			resultCheck('win', 'lose', 'Победа :)')
+			setTimeout(() => {
+				lzResult.classList.remove('active')
+				lz.classList.remove('disabled')
+			}, 1500)
+		},
+		(reject) => {
+			resultCheck('lose', 'win', 'Поражение :(')
+
+			setTimeout(() => {
+				lzResult.classList.remove('active')
+				lz.classList.remove('disabled')
+				restart()
+			}, 1500)
+		}
+		)
 }
 
 function selected(e) {
