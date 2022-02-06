@@ -23,6 +23,8 @@ let lzResult = document.querySelector('.lz__result')
 let lzHistoryList = document.querySelector('.lz-history__list')
 let lzHistoryItems = document.querySelectorAll('.lz-history__item')
 
+// console.log(lzHistoryItems[2])
+
 let lzCardDeck = {
 	default: '/img/luckyzodiac/card-back.svg',
 	hearts: {
@@ -300,7 +302,14 @@ function history(cardSuit) {
 	lzHistory.push(cardSuit)
 
 	lzHistory.forEach((game, index) => {
-		lzHistoryItems[index].children[0].src = lzCardDeck[game].historyUrl
+		if ( lzHistoryItems[index] == undefined ) {
+			localStorage.balance = parseInt(localStorage.balance) + parseInt(lzAmount.innerText)
+			lzBalance.innerText = localStorage.balance
+
+			setTimeout(restart, 1501)
+		} else {
+			lzHistoryItems[index].children[0].src = lzCardDeck[game].historyUrl
+		}
 	})
 }
 
