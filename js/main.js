@@ -20,12 +20,15 @@ let lz = document.querySelector('.lz')
 let lzAddMoney = document.querySelector('.lz-panel__add')
 let lzRetry = document.querySelector('.lz-panel__retry')
 let lzResult = document.querySelector('.lz__result')
+let lzHistoryList = document.querySelector('.lz-history__list')
+let lzHistoryItems = document.querySelectorAll('.lz-history__item')
 
 let lzCardDeck = {
 	default: '/img/luckyzodiac/card-back.svg',
 	hearts: {
 		color: "red",
 		suit: "hearts",
+		historyUrl: "/img/luckyzodiac/miniature/hearts-miniature.svg",
 		2: "/img/luckyzodiac/hearts/2-hearts.svg",
 		3: "/img/luckyzodiac/hearts/3-hearts.svg",
 		4: "/img/luckyzodiac/hearts/4-hearts.svg",
@@ -43,6 +46,7 @@ let lzCardDeck = {
 	spades: {
 		color: "black",
 		suit: "spades",
+		historyUrl: "/img/luckyzodiac/miniature/spades-miniature.svg",
 		2: "/img/luckyzodiac/spades/2-spades.svg",
 		3: "/img/luckyzodiac/spades/3-spades.svg",
 		4: "/img/luckyzodiac/spades/4-spades.svg",
@@ -60,6 +64,7 @@ let lzCardDeck = {
 	diamonds: {
 		color: "red",
 		suit: "diamonds",
+		historyUrl: "/img/luckyzodiac/miniature/diamonds-miniature.svg",
 		2: "/img/luckyzodiac/diamonds/2-diamonds.svg",
 		3: "/img/luckyzodiac/diamonds/3-diamonds.svg",
 		4: "/img/luckyzodiac/diamonds/4-diamonds.svg",
@@ -77,6 +82,7 @@ let lzCardDeck = {
 	clubs: {
 		color: "black",
 		suit: "clubs",
+		historyUrl: "/img/luckyzodiac/miniature/clubs-miniature.svg",
 		2: "/img/luckyzodiac/clubs/2-clubs.svg",
 		3: "/img/luckyzodiac/clubs/3-clubs.svg",
 		4: "/img/luckyzodiac/clubs/4-clubs.svg",
@@ -92,6 +98,8 @@ let lzCardDeck = {
 		14: "/img/luckyzodiac/clubs/a-clubs.svg",
 	},
 }
+
+let lzHistory = []
 
 if ( !localStorage.balance ) {
 	localStorage.balance = 10000
@@ -140,6 +148,10 @@ function restart() {
 	lzRetry.disabled = false
 	lzTakeWin.disabled = false
 	lzRestart.disabled = false
+
+	lzHistoryItems.forEach(item => {
+		item.children[0].src = '/img/luckyzodiac/card-back.svg'
+	})
 }
 
 function randomInteger(min, max) {
@@ -220,6 +232,8 @@ function selectedResult(option, select) {
 	promise.then(
 		(resolse) => {
 			resultCheck('win', 'lose', 'Победа :)')
+			history(Object.entries(lzCardDeck)[randomSuit][0])
+
 			setTimeout(() => {
 				lzResult.classList.remove('active')
 				lz.classList.remove('disabled')
@@ -227,6 +241,7 @@ function selectedResult(option, select) {
 		},
 		(reject) => {
 			resultCheck('lose', 'win', 'Поражение :(')
+			lzHistory = []
 
 			setTimeout(() => {
 				lzResult.classList.remove('active')
@@ -260,6 +275,7 @@ function takeWin(e) {
 
 	localStorage.balance = parseInt(localStorage.balance) + parseInt(lzAmount.innerText)
 	lzBalance.innerText = localStorage.balance
+
 	restart(e)
 }
 
@@ -278,6 +294,14 @@ function retry(e) {
 
 	placeBet(e)
 	lzRetry.disabled = true
+}
+
+function history(cardSuit) {
+	lzHistory.push(cardSuit)
+
+	lzHistory.forEach((game, index) => {
+		lzHistoryItems[index].children[0].src = lzCardDeck[game].historyUrl
+	})
 }
 
 [lzRed, lzBlack, lzRedHearts, lzRedDiamonds, lzBlackSpades, lzBlackClubs].forEach(option => {
