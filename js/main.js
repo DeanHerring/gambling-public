@@ -22,8 +22,30 @@ let lzRetry = document.querySelector('.lz-panel__retry')
 let lzResult = document.querySelector('.lz__result')
 let lzHistoryList = document.querySelector('.lz-history__list')
 let lzHistoryItems = document.querySelectorAll('.lz-history__item')
+let lzTurboOpen = document.querySelector('.lz-panel__generate')
+let lzTurboModal = document.querySelector('.lz-modal')
+let lzTurboClose = document.querySelector('.lz-modal__close')
 
-// console.log(lzHistoryItems[2])
+let lzTurboForm = document.querySelector('.lz-turbo__form')
+let lzTurboBet = document.querySelector('.lz-turbo__bet')
+let lzTurboGames = document.querySelector('.lz-turbo__games')
+let lzTurboRed = document.querySelector('.lz-modal__red')
+let lzTurboBlack = document.querySelector('.lz-modal__black')
+let lzTurboPlay = document.querySelector('.lz-turbo__play')
+let lzTurboClear = document.querySelector('.lz-turbo__clear')
+let lzTurboCards = document.querySelectorAll('.lz-modal__card')
+
+let lzTurboResult = document.querySelector('.lz-turbo')
+let lzTurboResultClose = document.querySelector('.lz-turbo__close')
+let lzStatsSum = document.querySelector('.stats__sum')
+let lzStatsGames = document.querySelector('.stats__games')
+let lzStatsWinCount = document.querySelector('.stats__win-count')
+let lzStatsWin = document.querySelector('.stats__win')
+let lzTurboString = document.querySelector('.turbo__string')
+let lzTurboTable = document.querySelector('.turbo-table')
+
+let max = 10000
+let min = 1
 
 let lzCardDeck = {
 	default: '/img/luckyzodiac/card-back.svg',
@@ -102,6 +124,7 @@ let lzCardDeck = {
 }
 
 let lzHistory = []
+let arrCombination = []
 
 if ( !localStorage.balance ) {
 	localStorage.balance = 10000
@@ -313,6 +336,164 @@ function history(cardSuit) {
 	})
 }
 
+function turbo(e) {
+	e.preventDefault()
+
+	if ( lzTurboModal.classList.contains('hidden') ) {
+		lzTurboModal.classList.remove('hidden')
+	} else {
+		lzTurboModal.classList.add('hidden')
+	}
+}
+
+function placeTurboBet(event) {
+	event.preventDefault();
+
+	(event.target == lzTurboBet) ? validationInput(event.target, 10000, 1) : false;
+	(event.target == lzTurboGames) ? validationInput(event.target, 250, 1) : false;
+
+	let costGames = parseInt(lzTurboBet.value) * parseInt(lzTurboGames.value)
+
+	if ( costGames > parseInt(localStorage.balance) ) {
+		lzTurboPlay.children[0].innerText = localStorage.balance
+	} else {
+		lzTurboPlay.children[0].innerText = costGames
+	}
+}
+
+function clearTurboBet(event) {
+	event.preventDefault()
+
+	lzTurboBet.value = 100
+	lzTurboGames.value = 10
+	lzTurboCards.forEach(card => {
+		card.classList.remove('red')
+		card.classList.remove('black')
+	})
+	arrCombination = []
+
+	placeTurboBet(event)
+}
+
+function createCombination(event)
+{
+	event.preventDefault()
+
+	if ( arrCombination.length < 10 ) {
+		arrCombination.push(event.target.getAttribute('data-option'))
+		arrCombination.forEach((suit, index) => {
+			lzTurboCards[index].classList.add(suit)
+		})
+	} else {
+		console.log('Достигнуто максимальное количество карт')
+	}
+}
+
+function validationInput(input, max, min)
+{
+	if ( parseInt(input.value) > max ) {
+		input.value = max
+	}
+
+	if ( parseInt(input.value) < min ) {
+		input.value = min
+	}
+}
+
+function generateTurbo(event)
+{
+	event.preventDefault()
+
+	lzTurboTable.innerText = '';
+	let games = []
+	let arrWinGame = []
+	let i = 0
+	let costGames = parseInt(lzTurboBet.value) * parseInt(lzTurboGames.value)
+	let futureBalance = parseInt(localStorage.balance) - costGames
+
+	if ( futureBalance > 0  ) {
+		localStorage.balance = futureBalance
+		lzBalance.innerText = futureBalance
+
+		if ( !arrCombination.length == 0 ) {
+			function a() {
+				let game = []
+
+				arrCombination.forEach((item, index) => {
+					let randomSuit = randomInteger(1, 4)
+					let randomCard = randomInteger(2, 14)
+
+					game.push(Object.entries(lzCardDeck)[randomSuit][1].color)
+				})
+
+				return game
+			}
+
+			let turboData = {
+				bet: parseInt(lzTurboBet.value),
+				gamesCount: parseInt(lzTurboGames.value),
+				costGames: costGames,
+				combination: arrCombination,
+				games: games,
+			}
+
+			while ( i < turboData.gamesCount ) {
+				games.push({ id: i + 1, cards: a(), result: 0 })
+				i++
+			}
+
+			lzTurboResult.classList.remove('hidden')
+
+			lzStatsSum.innerText = turboData.costGames
+			lzStatsGames.innerText = turboData.gamesCount
+
+			let winGame = turboData.bet * 2
+			let r = 1
+
+			while ( r < turboData.combination.length ) {
+				winGame = winGame * 2
+				r++
+			}
+
+			turboData.games.forEach((game) => {
+				let stringClone = lzTurboString.cloneNode(true);
+
+				if ( JSON.stringify(turboData.combination) == JSON.stringify(game.cards ) ) {
+					game.result = 1
+					stringClone.children[3].innerText = winGame
+				}
+
+				(game.result == 1) ? arrWinGame.push(game) : false;
+
+				stringClone.children[0].innerText = game.id
+				stringClone.children[1].innerText = turboData.bet
+				stringClone.children[2].innerText = 0
+
+				lzTurboTable.appendChild(stringClone)
+			})
+
+			lzStatsWinCount.innerText = arrWinGame.length
+			lzStatsWin.innerText = winGame * arrWinGame.length;
+
+			if ( parseInt(lzStatsWin.innerText) > 0 ) { 
+				localStorage.balance = parseInt(localStorage.balance) + parseInt(lzStatsWin.innerText) 
+				lzBalance.innerText = localStorage.balance
+			}
+		} else {
+			console.log('Выберите масть')
+		}
+	} else {
+		console.log('Недостаточно средств')
+	}
+}
+
+function turboResultClose() 
+{
+	[lzTurboModal, lzTurboResult].forEach(block => {
+		block.classList.add('hidden')
+	})
+}
+
 [lzRed, lzBlack, lzRedHearts, lzRedDiamonds, lzBlackSpades, lzBlackClubs].forEach(option => {
 	option.addEventListener('click', selected)
 })
@@ -321,3 +502,13 @@ lzRestart.addEventListener('click', restart)
 lzTakeWin.addEventListener('click', takeWin)
 lzAddMoney.addEventListener('click', addMoney)
 lzRetry.addEventListener('click', retry)
+lzTurboOpen.addEventListener('click', turbo)
+lzTurboClose.addEventListener('click', turbo)
+lzTurboClear.addEventListener('click', clearTurboBet)
+lzTurboRed.addEventListener('click', createCombination)
+lzTurboBlack.addEventListener('click', createCombination)
+lzTurboPlay.addEventListener('click', generateTurbo)
+lzTurboResultClose.addEventListener('click', turboResultClose)
+
+lzTurboBet.addEventListener('change', placeTurboBet)
+lzTurboGames.addEventListener('change', placeTurboBet)
