@@ -43,6 +43,7 @@
 					<button class="lz-panel__take">Take</button>
 					<button class="lz-panel__add">+10000</button>
 					<button class="lz-panel__retry">Retry</button>
+					<button class="lz-panel__generate">Turbo Game</button>
 				</form>
 			</div>
 			<div class="lz disabled">
@@ -100,6 +101,121 @@
 					<li class="lz-history__item"><img src="https://deanherring.github.io/gambling-public/img/luckyzodiac/card-back.svg" alt=""></li>
 					<li class="lz-history__item"><img src="https://deanherring.github.io/gambling-public/img/luckyzodiac/card-back.svg" alt=""></li>
 				</ul>
+			</div>
+			<div class="lz-modal">
+				<div class="lz-modal__overlay"></div>
+				<div class="lz-modal__content">
+					<div class="lz-modal__heading">
+						<h1>Турбо ставки</h1>
+						<div class="lz-modal__close"><p>Закрыть</p></div>
+					</div>
+					<div class="lz-modal__body">
+						<div class="lz-modal__actions">
+							<form class="lz-modal__form">
+								<div class="lz-modal__group">
+									<label>Сумма ставки</label>
+									<input type="text" class="lz-turbo__bet" value="10">
+								</div>
+								<div class="lz-modal__group">
+									<label>Количество игр</label>
+									<input type="text" class="lz-turbo__games" value="10">
+								</div>
+								<div class="lz-modal__suit">
+									<h2>Выбор масти</h2>
+									<div class="lz-modal__colors">
+										<div class="lz-modal__red" data-option="red"></div>
+										<p>или</p>
+										<div class="lz-modal__black" data-option="black"></div>
+									</div>
+								</div>
+								<div class="lz-modal__buttons">
+									<button class="lz-turbo__play">Играть <span>100</span></button>
+									<button class="lz-turbo__clear">Сбросить</button>
+								</div>
+							</form>
+						</div>
+						<div class="lz-modal__combination">
+							<h1>Комбинация карт</h1>
+							<ul class="lz-modal__list">
+								<li class="lz-modal__item">
+									<div class="lz-modal__card">1</div>
+								</li>
+								<li class="lz-modal__item">
+									<div class="lz-modal__card">2</div>
+								</li>
+								<li class="lz-modal__item">
+									<div class="lz-modal__card">3</div>
+								</li>
+								<li class="lz-modal__item">
+									<div class="lz-modal__card">4</div>
+								</li>
+								<li class="lz-modal__item">
+									<div class="lz-modal__card">5</div>
+								</li>
+								<li class="lz-modal__item">
+									<div class="lz-modal__card">6</div>
+								</li>
+								<li class="lz-modal__item">
+									<div class="lz-modal__card">7</div>
+								</li>
+								<li class="lz-modal__item">
+									<div class="lz-modal__card">8</div>
+								</li>
+								<li class="lz-modal__item">
+									<div class="lz-modal__card">9</div>
+								</li>
+								<li class="lz-modal__item">
+									<div class="lz-modal__card">10</div>
+								</li>			
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="lz-turbo hidden">
+				<div class="lz-turbo__overlay"></div>
+				<div class="lz-turbo__content">
+					<div class="lz-turbo__close"><p>Закрыть</p></div>
+					<div class="lz-turbo__stats">
+						<ul>
+							<li>
+								<h2>Сумма ставок</h2>
+								<h1 class="stats__sum">0</h1>
+							</li>
+							<li>
+								<h2>Количество игр</h2>
+								<h1 class="stats__games">0</h1>
+							</li>
+							<li>
+								<h2>Побед</h2>
+								<h1 class="stats__win-count">0</h1>
+							</li>
+							<li>
+								<h2>Выигрыш</h2>
+								<h1 class="stats__win">0</h1>
+							</li>
+						</ul>
+					</div>
+					<div class="lz-turbo__list">
+						<table class="turbo-table">
+							<caption>История</caption>
+
+							<tr>
+								<th>ID</th>
+								<th>Ставка</th>
+								<th>Коефф</th>
+								<th>Выигрыш</th>
+							</tr>
+
+							<tr class="turbo__string">
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+							</tr>
+						</table>
+					</div>
+				</div>
 			</div>
 		</section>
 	</div>
